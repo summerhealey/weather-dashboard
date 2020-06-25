@@ -1,16 +1,27 @@
 $(document).ready(() => {
   //Variables
   //  var apiKey = '236f61cf86e4cbb6234939b6635ebc9c';
-  
+  var searchHistory = localStorage.getItem("searchHistory")
+    ? JSON.parse(localStorage.getItem("searchHistory"))
+    : [];
+
+  console.log("start:", searchHistory.length, searchHistory);
+  if (searchHistory.length > 0) {
+    searchHistoryDisplay();
+  }
 
   //SEARCH BUTTON
   /*Description: Button, that once pressed, provides information on city input into the search form to be displayed as current weather and five day forecast*/
 
   $("#searchBtn").on("click", function (event) {
     event.preventDefault();
-
     var city = $("#search-term").val();
     console.log(city);
+
+    if (searchHistory.indexOf(city) === -1) {
+        searchHistory.push(city);
+        localStorage.setItem("searchHistory", JSON.stringify(searchHistory));
+      }
 
     currentWeather(city);
     searchHistoryDisplay();
@@ -110,11 +121,44 @@ $(document).ready(() => {
   // searchHistoryDisplay FUNCTION
   /*Description: Displays recent searches as buttons in a list*/
   function searchHistoryDisplay() {
-   
+    $("#cityHistory").empty();
+
+    console.log("len:", searchHistory.length, searchHistory);
+
+    for (var i = 0; i < searchHistory.length; i++) {
+      console.log(i, searchHistory[i]);
+      var historyButton = $("<button>");
+      historyButton.addClass("searched-cities btn btn-light btn-lg btn-block");
+      historyButton.text(searchHistory[i]);
+      $("#cityHistory").prepend(historyButton);
+    }
+
+    $(".searched-cities").on("click", function () {
+      $(".weatherContainer").removeClass("hide");
+      var searchedCity = $(this).text();
+      currentWeather(searchedCity);
+      forecastWeather(searchedCity);
+    });
+
+    //Displays last search if a search has been conducted
+
+    if (searchHistory.length > 0) {
+        var city = searchHistory[searchHistory.length - 1]
+        $("#search-term").val(city);
+        currentWeather(city);
+        forecastWeather(city);
+    $(".weatherContainer").removeClass("hide");
+  }
   }
   //CLEAR BUTTON
   /* Clear history function*/
-  
+  $("#clearHistory").on("click", function () {
+    $("#cityHistory").empty();
+    $("#search-term").val("");
+    searchHistory = [];
+    localStorage.clear();
+    location.reload();
+  });
 
   
 });

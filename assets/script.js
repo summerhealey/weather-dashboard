@@ -54,7 +54,7 @@ $(document).ready(() => {
             response.weather[0].icon +
             "@2x.png"
         );
-        $("#temp").text(currentTemperature + 'F');
+        $("#temp").text(currentTemperature + '°F');
         $("#humidity").text(currentHumidity + "%");
         $("#windSpeed").text(currentWindSpeed + " MPH");
 

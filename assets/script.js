@@ -41,7 +41,7 @@ $(document).ready(() => {
         //currentWeather Variables
         var currentDateTime = moment().format("LLL");
         var cityName = response.name;
-        var currentTemperature = Math.round(response.main.temp_min);
+        var currentTemperature = Math.round(response.main.temp);
         var currentHumidity = Math.round(response.main.humidity);
         var currentWindSpeed = Math.round(response.wind.speed);
 
@@ -54,6 +54,7 @@ $(document).ready(() => {
             response.weather[0].icon +
             "@2x.png"
         );
+        $("#temp").text(currentTemperature + 'F');
         $("#humidity").text(currentHumidity + "%");
         $("#windSpeed").text(currentWindSpeed + " MPH");
 

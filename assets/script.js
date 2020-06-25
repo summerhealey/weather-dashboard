@@ -7,8 +7,8 @@ $(document).ready(() => {
   /*Description: Button, that once pressed, provides information on city input into the search form to be displayed as current weather and five day forecast*/
 
   $("#searchBtn").on("click", function (event) {
-    
     event.preventDefault();
+
     var city = $("#search-term").val();
     console.log(city);
 
@@ -30,12 +30,12 @@ $(document).ready(() => {
         //currentWeather Variables
         var currentDateTime = moment().format("LLL");
         var cityName = response.name;
-        var currentTemperature = Math.round(response.main.temp);
+        var currentTemperature = Math.round(response.main.temp_min);
         var currentHumidity = Math.round(response.main.humidity);
         var currentWindSpeed = Math.round(response.wind.speed);
 
         $("#cityDate").html(
-          "<h2>" + cityName + " (" + currentDateTime + ")" + "<h2>"
+          "<h2>" + cityName + "(" + currentDateTime + ")" + "<h2>"
         );
         $("#currentIcon").attr(
           "src",
@@ -43,7 +43,6 @@ $(document).ready(() => {
             response.weather[0].icon +
             "@2x.png"
         );
-        $("#temp").text(currentTemperature + 'F');
         $("#humidity").text(currentHumidity + "%");
         $("#windSpeed").text(currentWindSpeed + " MPH");
 
@@ -65,9 +64,45 @@ $(document).ready(() => {
       success: function (response) {
         console.log(response);
 
-        
+        //uvIndex DISPLAY
+        $("#uvIndex").html(response.current.uvi);
+        if (response.current.uvi > 11) {
+          $("#uvIndex").addClass("red");
+        }
+        if (response.current.uvi < 10) {
+          $("#uvIndex").addClass("green");
+        }
+        if (response.current.uvi >= 10 && response.current.uvi <= 11) {
+          $("#uvIndex").addClass("yellow");
+        }
+
         //fiveDayForecast DISPLAY
-        
+        for (let i = 1; i < 6; i++) {
+          console.log(response.daily[i]);
+
+          var hourString = i.toString();
+          let day = moment.unix(response.daily[i].dt).format("MM-DD");
+
+          $("#card-date" + hourString).html("<p>" + day + "</p>");
+          $("#card-temp" + hourString).html(
+            "<p>" + response.daily[i].temp.day + "</p>"
+          );
+          $("#card-humid" + hourString).html(
+            "<p>" + response.daily[i].humidity + "%</p>"
+          );
+          $("#card-icon" + hourString)
+            .attr(
+              "src",
+              "http://openweathermap.org/img/w/" +
+                response.daily[i].weather[0].icon +
+                ".png"
+            )
+            .html(
+              '<img src="http://openweathermap.org/img/w/"' +
+                response.daily[i].weather[0].icon +
+                ".png"
+            );
+        }
       },
     });
   }
@@ -75,15 +110,11 @@ $(document).ready(() => {
   // searchHistoryDisplay FUNCTION
   /*Description: Displays recent searches as buttons in a list*/
   function searchHistoryDisplay() {
-    
-
-    //Displays last search if a search has been conducted
-
-    
+   
   }
   //CLEAR BUTTON
   /* Clear history function*/
-
+  
 
   
 });

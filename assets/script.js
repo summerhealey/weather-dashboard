@@ -46,7 +46,7 @@ $(document).ready(() => {
         var currentWindSpeed = Math.round(response.wind.speed);
 
         $("#cityDate").html(
-          "<h2>" + cityName + "(" + currentDateTime + ")" + "<h2>"
+          "<h2>" + cityName + " (" + currentDateTime + ")" + "<h2>"
         );
         $("#currentIcon").attr(
           "src",
@@ -97,10 +97,10 @@ $(document).ready(() => {
 
           $("#card-date" + hourString).html("<p>" + day + "</p>");
           $("#card-temp" + hourString).html(
-            "<p>" + response.daily[i].temp.day + "</p>"
+            "<p>" + Math.round(response.daily[i].temp.day) + "°F</p>"
           );
           $("#card-humid" + hourString).html(
-            "<p>" + response.daily[i].humidity + "%</p>"
+            "<p>" + "Humdity: " + response.daily[i].humidity + "%</p>"
           );
           $("#card-icon" + hourString)
             .attr(

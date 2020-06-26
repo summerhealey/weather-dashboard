@@ -35,9 +35,11 @@ Client Demo:
 ![Weather Dashboard](./Assets/06-server-side-apis-homework-demo.png)
 
 Application Demo: 
-![Deployed Application Screenshot](./assets/images/weatherDashboard.gif)
+![Deployed Application Screenshot](./assets/images/weatherDashboard.png)
 
-Validation of Site Available Here: 
+Validation of Site Available Here: https://validator.w3.org/nu/?doc=https%3A%2F%2Fsummerhealey.github.io%2Fweather-dashboard%2F
+
+Deployed Site Link: https://summerhealey.github.io/weather-dashboard/ 
 
 # Criteria Determination: 
 

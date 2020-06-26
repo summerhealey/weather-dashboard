@@ -97,7 +97,7 @@ $(document).ready(() => {
 
           $("#card-date" + hourString).html("<p>" + day + "</p>");
           $("#card-temp" + hourString).html(
-            "<p>" + Math.round(response.daily[i].temp.day) + "°F</p>"
+            "<p>" + Math.round(response.daily[i].temp.night) + "°F   -  " + Math.round(response.daily[i].temp.day) + "°F</p>"
           );
           $("#card-humid" + hourString).html(
             "<p>" + "Humdity: " + response.daily[i].humidity + "%</p>"
